@@ -1,11 +1,54 @@
 <template>
   <div id="welcome">
     <el-dialog
-      title="verifyStudent"
-      visible.sync="verifyVisible"
-      width="30%">
+      title="Is This You?"
+      :visible.sync="verifyStudent"
+      width="80%">
+      <span>
+        <span class="student-info-wrapper">
+          Name: {{ studentInfo.value }}
+          Country: {{ studentInfo.country }}
+          Email: {{ studentInfo. email }}
+        </span>
+      </span>
+      <span slot="footer" class="verify-footer">
+        <el-button
+          class="cancel-check-button"
+          type="text"
+          @click="cancelCheckIn">
+          Cancel
+        </el-button>
+        <el-button
+          class="check-in-button"
+          plain
+          @click="checkIn">
+          Check In
+        </el-button>
+      </span>
     </el-dialog>
-    <div class="welcome-content" v-if="!addingStudent">
+    <el-dialog
+      title="Enter Your Information"
+      :visible.sync="addingStudent"
+      width="80%">
+      <el-form :model="addFormInfo">
+        <el-form-item label="First name" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.firstName" autocomplete="off" placeholder="John"></el-input>
+        </el-form-item>
+        <el-form-item label="Last name" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.lastName" autocomplete="off" placeholder="Smith"></el-input>
+        </el-form-item>
+        <el-form-item label="Student Id" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.id" autocomplete="off" placeholder="1234567"></el-input>
+        </el-form-item>
+        <el-form-item label="Country" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.country" autocomplete="off" placeholder="Canada"></el-input>
+        </el-form-item>
+        <el-form-item label="Email" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.email" autocomplete="off" placeholder="john.smith@email.com"></el-input>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+    <div class="welcome-content" v-if="!addingStudent && !verifyStudent">
       <transition name="fade" mode="out-in">
         <div class="welcome-header" v-bind:key="welcomeString">
           {{ welcomeString }}
@@ -17,18 +60,14 @@
           v-model="studentName"
           placeholder="Enter Name"
           :trigger-on-focus="false"
-          :fetch-suggestions="querySearch"
-          @select="handleNameSelect"
-          >
-          <i
-            class="el-icon-search el-input__icon"
-            slot="suffix">
-          </i>
+          :fetch-suggestions="queryStudents"
+          @select="handleNameSelect">
+          <i class="el-icon-search el-input__icon" slot="suffix"></i>
         </el-autocomplete>
         <el-button
+          v-if="registerStudent"
           type="text"
-          @click="addStudent"
-        >
+          @click="addStudent">
           Can't Find Your Name?
         </el-button>
       </div>
@@ -46,13 +85,46 @@ export default {
     return {
       studentName: null,
       addingStudent: false,
-      welcomeStringArray: ['Welcome', 'أهلا بك', '欢迎', 'Bienvenu', 'स्वागत हे', `Pjila'Si`,
-        '환영', 'Karibu', 'સ્વાગત છે', 'Chào Mừng'],
+      registerStudent: false,
       welcomeStringIndex: 0,
       welcomeTimer: 0,
       checkedIn: false,
-      verifyVisible: false,
+      verifyStudent: false,
+      formLabelWidth: '120px',
       studentNameArray: [],
+      addFormInfo: {
+        firstName: '',
+        lastName: '',
+        country: '',
+        email: '',
+        id: '',
+      },
+      studentInfo: {
+        value: null,
+        country: null,
+        email: null,
+      },
+      welcomeStringArray: [
+        'Welcome',
+        'أهلا بك',
+        '欢迎',
+        'Bienvenu',
+        'स्वागत हे',
+        `Pjila'Si`,
+        '환영',
+        'Karibu',
+        'સ્વાગત છે',
+        'Chào Mừng',
+        'Bem Vinda',
+        'приветствовать',
+        'स्वागतम',
+        'Wamkelekile',
+        'Kaabọ',
+        'die Begrüßung',
+        'ようこそ！',
+        'Nnọọ',
+        'خوش باش'
+      ],
     }
   },
   computed: {
@@ -64,7 +136,7 @@ export default {
   methods: {
     addStudent() {
       // eslint-disable-next-line
-      console.log('User has added student');
+      console.log('User is adding a student');
       this.addingStudent = true;
     },
     setWelcomeString() {
@@ -81,21 +153,47 @@ export default {
         this.changeWelcomeString();
       }, 3000);
     },
-    handleNameSelect(value) {
-      this.studentName = value;
-    },
-    querySearch(string, callback) {
+    handleNameSelect(student) {
+      this.studentName = student.value;
+      this.studentInfo = { ...student };
       // eslint-disable-next-line
-      console.log('querying strings', string);
-      callback(this.welcomeStringArray);
+      console.log('Verifying student');
+      this.verifyStudent = true;
+    },
+    queryStudents(queryString, cb) {
+      let students = [...this.studentNameArray];
+      let queryResults = queryString ? students.filter(this.nameFilter(queryString)) : students;
+      if (queryResults.length === 0) {
+        this.registerStudent = true;
+      } else {
+        this.registerStudent = false;
+      }
+      cb(queryResults);
+    },
+    nameFilter(queryString) {
+      return (student) => {
+        return (student.value.toLowerCase().includes(queryString.toLowerCase()));
+      }
     },
     setUpStudentNames() {
       this.allStudents.map((student) => {
         let name = `${student.firstName} ${student.lastName}`;
-        this.studentNameArray.push(name);
+        this.studentNameArray.push({
+          value: name,
+          country: student.country,
+          email: student.email,
+        });
         return student;
       });
     },
+    cancelCheckIn(){
+      // eslint-disable-next-line
+      console.log('User has cancelled check in');
+    },
+    checkIn() {
+      // eslint-disable-next-line
+      console.log('User has checked in');
+    }
   },
   mounted() {
     this.changeWelcomeString();
