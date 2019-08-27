@@ -61,19 +61,6 @@ body {
   margin: 0px;
   width: 100%;
   height: 100%;
-  background-image: linear-gradient(
-    rgba(200,200,200,0),
-    rgba(200, 200, 200, 0.1),
-    rgba(200, 200, 200, 0.4)
-    ), url(./assets/ISAOBackground.jpg);
-  background-color: linear-gradient(
-    rgba(213, 67, 37, 1),
-    rgba(213, 67, 37, 0.1),
-    rgba(213, 67, 37, 0.4),
-  );
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden;
   font-family: unbFont;
 }
 </style>

@@ -123,24 +123,29 @@ export default {
       },
       welcomeStringArray: [
         'Welcome',
-        'أهلا بك',
-        '欢迎',
+        'Nnọọ',
+        '歡迎',
         'Bienvenu',
+        'خوش آمدید',
+        'Bienvenida',
         'स्वागत हे',
         `Pjila'Si`,
-        '환영',
-        'Karibu',
+        'Sannu da zuwâ',
+        '환영합니다',
         'સ્વાગત છે',
+        'Ób’ókhían',
         'Chào Mừng',
-        'Bem Vinda',
-        'приветствовать',
         'स्वागतम',
-        'Wamkelekile',
-        'Kaabọ',
-        'die Begrüßung',
-        'ようこそ！',
-        'Nnọọ',
-        'خوش باش'
+        'ようこそ',
+        'Herzlich Willkommen',
+        'Xoş gəlmişsiniz',
+        'Welkom',
+        'Tervetuloa',
+        'Selamat Datang',
+        'Ek’abo',
+        'Murakaza neza',
+        'வாருங்கள்',
+        'أهلاً و سهلاً',
       ],
     }
   },
@@ -260,6 +265,19 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-image: linear-gradient(
+    rgba(200,200,200,0),
+    rgba(200, 200, 200, 0.1),
+    rgba(200, 200, 200, 0.4)
+    ), url(../assets/ISAOBackground.jpg);
+  background-color: linear-gradient(
+    rgba(213, 67, 37, 1),
+    rgba(213, 67, 37, 0.1),
+    rgba(213, 67, 37, 0.4),
+  );
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
 
   .welcome-content {
     width: 80%;
