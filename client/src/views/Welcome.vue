@@ -216,7 +216,7 @@ export default {
     },
     checkIn() {
       // eslint-disable-next-line
-      console.log('User has checked in');
+      console.log('User has checked in!');
       this.$router.push('check');
     },
     resetStudentInfo() {
