@@ -78,6 +78,14 @@ export default {
 }
 </script>
 <style lang="scss">
+@font-face {
+  font-family: unbFont;
+  src: url('../assets/ProximaNova-Regular.ttf');
+}
+@font-face {
+  font-family: unbFontBold;
+  src: url('../assets/ProximaNova-Bold.ttf');
+}
 #login {
   width: 100%;
   height: 100%;
@@ -102,6 +110,7 @@ export default {
       padding: 20px 0px;
       font-size: 32px;
       font-weight: 400;
+      font-family: unbFontBold;
     }
     .login-input-wrapper {
       height: 50%;
@@ -120,8 +129,8 @@ export default {
 
       .el-button {
         height: 36px;
-        font-family: Helvetica;
-        color: rgba(213, 67, 37, 1);
+        font-family: unbFont;
+        color: rgba(204, 0, 0, 1);
         background-color: rgb(252, 209, 200);
         border-color: rgb(250, 117, 91);
       }

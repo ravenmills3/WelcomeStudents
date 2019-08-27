@@ -22,7 +22,22 @@ router.post('/', async (request, response) => {
     response.status(201).send();
 })
 
-// DELETE - Not needed 
+// PUT
+router.put('/', async (request, response) => {
+    const students = await loadDatabase();
+    let id = {
+        _id: new mongo.ObjectID(request.params.id)
+    };
+    students.update(
+        {_id: id},
+        {$set: {'Check In': new Date() }},
+        (error, result) => {
+        if(error) {
+            throw error;
+        }
+        response.status(200).send();
+    });
+});
 
 
 // Async Connect

@@ -34,6 +34,7 @@ export default new Vuex.Store({
                             lastName: studentData['Last Name'],
                             country: studentData['Home Country'],
                             email: studentData['Personal Email'],
+                            dbID: studentData['_id'],
                         };
                         store.commit('addStudent', student);
                     })

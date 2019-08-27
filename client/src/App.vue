@@ -52,6 +52,11 @@ body {
   width: 100%;
   margin: 0px;
 }
+@font-face {
+  font-family: unbFont;
+  src: url('./assets/ProximaNova-Regular.ttf');
+}
+
 #app {
   margin: 0px;
   width: 100%;
@@ -69,6 +74,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden;
-  font-family: Helvetica;
+  font-family: unbFont;
 }
 </style>

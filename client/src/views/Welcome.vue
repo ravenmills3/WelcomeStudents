@@ -3,15 +3,16 @@
     <el-dialog
       title="Is This You?"
       :visible.sync="verifyStudent"
-      width="80%">
-      <span>
-        <span class="student-info-wrapper">
-          Name: {{ studentInfo.value }}
-          Country: {{ studentInfo.country }}
-          Email: {{ studentInfo. email }}
-        </span>
+      :before-close="cancelCheckIn"
+      custom-class="verify-dialog"
+      width="80%"
+      center>
+      <span class="student-info-wrapper">
+          <span class="student-name"> Name: {{ studentInfo.value }}</span>
+          <span class="student-country" v-if="studentInfo.country"> Country: {{ studentInfo.country }}</span>
+          <span class="student-email" v-if="studentInfo.email"> Email: {{ studentInfo. email }}</span>
       </span>
-      <span slot="footer" class="verify-footer">
+      <span slot="footer" class="dialog-footer">
         <el-button
           class="cancel-check-button"
           type="text"
@@ -29,6 +30,7 @@
     <el-dialog
       title="Enter Your Information"
       :visible.sync="addingStudent"
+      :before-close="cancelCheckIn"
       width="80%">
       <el-form :model="addFormInfo">
         <el-form-item label="First name" :label-width="formLabelWidth">
@@ -47,6 +49,20 @@
           <el-input v-model="addFormInfo.email" autocomplete="off" placeholder="john.smith@email.com"></el-input>
         </el-form-item>
       </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button
+          class="cancel-check-button"
+          type="text"
+          @click="cancelCheckIn">
+          Cancel
+        </el-button>
+        <el-button
+          class="check-in-button"
+          plain
+          @click="checkIn">
+          Check In
+        </el-button>
+      </span>
     </el-dialog>
     <div class="welcome-content" v-if="!addingStudent && !verifyStudent">
       <transition name="fade" mode="out-in">
@@ -103,6 +119,7 @@ export default {
         value: null,
         country: null,
         email: null,
+        dbID: null,
       },
       welcomeStringArray: [
         'Welcome',
@@ -182,18 +199,43 @@ export default {
           value: name,
           country: student.country,
           email: student.email,
+          dbID: student.dbID,
         });
         return student;
       });
     },
-    cancelCheckIn(){
+    cancelCheckIn() {
+      this.resetStudentInfo();
+      this.resetFormInfo();
+      this.studentName = '';
+      this.addingStudent = false;
+      this.verifyStudent = false;
+      this.registerStudent = false;
       // eslint-disable-next-line
       console.log('User has cancelled check in');
     },
     checkIn() {
       // eslint-disable-next-line
       console.log('User has checked in');
-    }
+      this.$router.push('check');
+    },
+    resetStudentInfo() {
+      this.studentInfo = {
+        value: null,
+        country: null,
+        email: null,
+        dbID: null,
+      };
+    },
+    resetFormInfo() {
+      this.addFormInfo = {
+        firstName: '',
+        lastName: '',
+        country: '',
+        email: '',
+        id: '',
+      };
+    },
   },
   mounted() {
     this.changeWelcomeString();
@@ -202,6 +244,15 @@ export default {
 }
 </script>
 <style lang="scss">
+@font-face {
+  font-family: unbFont;
+  src: url('../assets/ProximaNova-Regular.ttf');
+}
+@font-face {
+  font-family: unbFontBold;
+  src: url('../assets/ProximaNova-Bold.ttf');
+}
+
 #welcome {
   width: 100%;
   height: 100%;
@@ -221,7 +272,7 @@ export default {
       align-content: center;
       color: rgba(0, 0, 0, 1);
       font-size: 64px;
-      font-weight: 700;
+      font-family: unbFontBold;
     }
 
     .fade-enter-active, .fade-leave-active {
@@ -240,14 +291,57 @@ export default {
 
       .el-autocomplete {
         width: 80%;
+        font-family: unbFont;
       }
 
       .el-button {
         margin-top: 20px;
         color: rgba(0, 0, 0, 1);
         text-decoration: underline;
+        font-family: unbFontBold;
+        font-size: 16px;
       }
     }
   }
+}
+.el-dialog {
+  font-family: unbFontBold;
+  font-size: 28px;
+
+  .el-dialog__body {
+    font-family: unbFont;
+    color: rgba(0, 0, 0, 1);
+
+    .student-info-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .student-name, .student-country, .student-email {
+        padding-top: 12px;
+        font-size: 20px;
+      }
+    }
+    
+    .el-input {
+      font-family: unbFont;
+    }
+  }
+
+  .dialog-footer {
+    font-family: unbFont;
+
+    .cancel-check-button {
+      color: rgba(204, 0, 0, 1);
+    }
+    .check-in-button:hover {
+      color: rgba(204, 0, 0, 1);
+      border-color: rgba(204, 0, 0, 1);
+    }
+  }
+}
+.el-popper {
+  font-family: unbFont;
 }
 </style>
