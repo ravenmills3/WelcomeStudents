@@ -17,25 +17,23 @@ router.post('/', async (request, response) => {
         'Last Name': request.body.lastName,
         'Student Number': request.body.studentID,
         'Personal Email': request.body.email,
-        createdAt: new Date()
+        'Home Country': request.body.country,
+        'Check_In': new Date()
     });
     response.status(201).send();
 })
 
 // PUT
-router.put('/', async (request, response) => {
+router.put('/:id', async (request, response) => {
     const students = await loadDatabase();
-    let id = {
-        _id: new mongo.ObjectID(request.params.id)
-    };
-    students.update(
-        {_id: id},
-        {$set: {'Check In': new Date() }},
+    students.updateOne(
+        {_id: new mongo.ObjectID(request.params.id)},
+        {$set: {'Check_In': new Date() }},
         (error, result) => {
         if(error) {
             throw error;
         }
-        response.status(200).send();
+        response.status(200).send(result);
     });
 });
 

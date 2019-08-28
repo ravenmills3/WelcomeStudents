@@ -36,7 +36,7 @@ export default new Vuex.Store({
                             email: studentData['Personal Email'],
                             dbID: studentData['_id'],
                         };
-                        store.commit('addStudent', student);
+                        store.commit('setStudents', student);
                     })
                     // eslint-disable-next-line
                     console.log('loaded student data');
@@ -62,6 +62,39 @@ export default new Vuex.Store({
                 }),
             });
         },
+        checkInStudent(store, studentPayload) {
+            try {
+                studentService.checkInStudent(studentPayload.dbID);
+                setTimeout(() => {
+                    store.dispatch('getAllStudents');
+                }, 1000);
+                // eslint-disable-next-line
+                console.log('Student has been successfully checked in');
+            } catch(error) {
+                // eslint-disable-next-line
+                console.log('Error checking in student');
+            }
+        },
+        addStudent(store, studentPayload) {
+            try {
+                let params = {
+                    firstName: studentPayload.firstName,
+                    lastName: studentPayload.lastName,
+                    studentID: studentPayload.id,
+                    email: studentPayload.email,
+                    country: studentPayload.country,
+                }
+                studentService.addStudent(params);
+                setTimeout(() => {
+                    store.dispatch('getAllStudents');
+                }, 1000);
+                // eslint-disable-next-line
+                console.log('Student has been successfully added');
+            } catch(error) {
+                // eslint-disable-next-line
+                console.log('Error adding student');
+            }
+        },
     },
     
     mutations: {
@@ -71,7 +104,7 @@ export default new Vuex.Store({
         setPassword(state, payload) {
             state.password = payload;
         },
-        addStudent(state, student) {
+        setStudents(state, student) {
             let studentList =  [...state.students];
             studentList.unshift(student);
             Vue.set(state, 'students', studentList);

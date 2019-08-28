@@ -21,7 +21,6 @@
         </el-button>
         <el-button
           class="check-in-button"
-          plain
           @click="checkIn">
           Check In
         </el-button>
@@ -29,7 +28,7 @@
     </el-dialog>
     <el-dialog
       title="Enter Your Information"
-      :visible.sync="addingStudent"
+      :visible.sync="registerStudent"
       :before-close="cancelCheckIn"
       width="80%">
       <el-form :model="addFormInfo">
@@ -39,7 +38,7 @@
         <el-form-item label="Last name" :label-width="formLabelWidth">
           <el-input v-model="addFormInfo.lastName" autocomplete="off" placeholder="Smith"></el-input>
         </el-form-item>
-        <el-form-item label="Student Id" :label-width="formLabelWidth">
+        <el-form-item label="Student #" :label-width="formLabelWidth">
           <el-input v-model="addFormInfo.id" autocomplete="off" placeholder="1234567"></el-input>
         </el-form-item>
         <el-form-item label="Country" :label-width="formLabelWidth">
@@ -58,13 +57,12 @@
         </el-button>
         <el-button
           class="check-in-button"
-          plain
           @click="checkIn">
           Check In
         </el-button>
       </span>
     </el-dialog>
-    <div class="welcome-content" v-if="!addingStudent && !verifyStudent">
+    <div class="welcome-content" v-if="!registerStudent && !verifyStudent">
       <transition name="fade" mode="out-in">
         <div class="welcome-header" v-bind:key="welcomeString">
           {{ welcomeString }}
@@ -81,9 +79,9 @@
           <i class="el-icon-search el-input__icon" slot="suffix"></i>
         </el-autocomplete>
         <el-button
-          v-if="registerStudent"
+          v-if="!inDatabase"
           type="text"
-          @click="addStudent">
+          @click="addingStudent">
           Can't Find Your Name?
         </el-button>
       </div>
@@ -91,7 +89,7 @@
   </div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Welcome',
@@ -100,7 +98,7 @@ export default {
   data() {
     return {
       studentName: null,
-      addingStudent: false,
+      inDatabase: true,
       registerStudent: false,
       welcomeStringIndex: 0,
       welcomeTimer: 0,
@@ -127,19 +125,19 @@ export default {
         '歡迎',
         'Bienvenu',
         'خوش آمدید',
-        'Bienvenida',
         'स्वागत हे',
         `Pjila'Si`,
+        'Bienvenida',
         'Sannu da zuwâ',
         '환영합니다',
         'સ્વાગત છે',
         'Ób’ókhían',
+        'Welkom',
         'Chào Mừng',
         'स्वागतम',
         'ようこそ',
         'Herzlich Willkommen',
         'Xoş gəlmişsiniz',
-        'Welkom',
         'Tervetuloa',
         'Selamat Datang',
         'Ek’abo',
@@ -156,10 +154,11 @@ export default {
     },
   },
   methods: {
-    addStudent() {
+    ...mapActions(['checkInStudent', 'addStudent']),
+    addingStudent() {
       // eslint-disable-next-line
       console.log('User is adding a student');
-      this.addingStudent = true;
+      this.registerStudent = true;
     },
     setWelcomeString() {
       if (this.welcomeStringIndex >= this.welcomeStringArray.length) {
@@ -186,9 +185,9 @@ export default {
       let students = [...this.studentNameArray];
       let queryResults = queryString ? students.filter(this.nameFilter(queryString)) : students;
       if (queryResults.length === 0) {
-        this.registerStudent = true;
+        this.inDatabase = false;
       } else {
-        this.registerStudent = false;
+        this.inDatabase = true;
       }
       cb(queryResults);
     },
@@ -213,13 +212,21 @@ export default {
       this.resetStudentInfo();
       this.resetFormInfo();
       this.studentName = '';
-      this.addingStudent = false;
-      this.verifyStudent = false;
       this.registerStudent = false;
+      this.verifyStudent = false;
+      this.inDatabase = true;
       // eslint-disable-next-line
       console.log('User has cancelled check in');
     },
     checkIn() {
+      let payload;
+      if (this.verifyStudent) {
+        payload = { dbID: this.studentInfo.dbID };
+        this.checkInStudent(payload);
+      } else if (this.registerStudent) {
+        payload = { ...this.addFormInfo };
+        this.addStudent(payload);
+      }
       // eslint-disable-next-line
       console.log('User has checked in!');
       this.$router.push('check');
@@ -353,9 +360,10 @@ export default {
     .cancel-check-button {
       color: rgba(204, 0, 0, 1);
     }
-    .check-in-button:hover {
-      color: rgba(204, 0, 0, 1);
-      border-color: rgba(204, 0, 0, 1);
+    .check-in-button {
+      color: rgb(132, 189, 0);
+      border-color: rgb(169, 211, 72);
+      background-color: rgb(224, 243, 181);
     }
   }
 }

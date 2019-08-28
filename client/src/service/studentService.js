@@ -19,6 +19,11 @@ class studentService {
     static addStudent(studentParams) {
         return axios.post(url, { ...studentParams });
     }
+
+    // Update/Check In Students
+    static checkInStudent(dbID) {
+        return axios.put(`${url}${dbID}`);
+    }
 }
 
 export default studentService;
