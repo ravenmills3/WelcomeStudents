@@ -30,10 +30,10 @@ export default new Vuex.Store({
                 studentService.getStudents().then((response) => {
                     response.map((studentData) => {
                         let student = {
-                            firstName: studentData['First Name'],
-                            lastName: studentData['Last Name'],
-                            country: studentData['Home Country'],
-                            email: studentData['Personal Email'],
+                            firstName: studentData['fname'],
+                            lastName: studentData['lname'],
+                            country: studentData['Country'],
+                            email: studentData['Email'],
                             dbID: studentData['_id'],
                         };
                         store.commit('setStudents', student);
@@ -83,7 +83,7 @@ export default new Vuex.Store({
                     studentID: studentPayload.id,
                     email: studentPayload.email,
                     country: studentPayload.country,
-                }
+                };
                 studentService.addStudent(params);
                 setTimeout(() => {
                     store.dispatch('getAllStudents');

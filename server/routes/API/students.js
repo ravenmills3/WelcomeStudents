@@ -13,11 +13,11 @@ router.get('/', async (request, response) => {
 router.post('/', async (request, response) => {
     const students = await loadDatabase();
     students.insertOne({
-        'First Name': request.body.firstName,
-        'Last Name': request.body.lastName,
-        'Student Number': request.body.studentID,
-        'Personal Email': request.body.email,
-        'Home Country': request.body.country,
+        'fname': request.body.firstName,
+        'lname': request.body.lastName,
+        'Student_Number': request.body.studentID,
+        'Email': request.body.email,
+        'Country': request.body.country,
         'Check_In': new Date()
     });
     response.status(201).send();
@@ -44,6 +44,9 @@ async function loadDatabase() {
     ('mongodb+srv://isao_01:welcomeStudent1@welcome-register-vownn.mongodb.net/test?retryWrites=true&w=majority',  {
         useNewUrlParser: true,
     });
-    return client.db('test').collection('students');
+    return client.db('test').collection('orientationList');
 }
 module.exports = router;
+// Export and Import Statments
+// mongoexport --uri 'mongodb+srv://isao_01:welcomeStudent1@welcome-register-vownn.mongodb.net/test?retryWrites=true&w=majority' --collection students --type=csv --fieldFile CSVHeaders.txt --out './output/StudentList.csv'
+// mongoimport --uri 'mongodb+srv://isao_01:welcomeStudent1@welcome-register-vownn.mongodb.net/test?retryWrites=true&w=majority' --type csv --headerline --file 'orientationList.csv'
