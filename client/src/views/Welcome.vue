@@ -262,7 +262,7 @@ export default {
 }
 @font-face {
   font-family: unbFontBold;
-  src: url('../assets/ProximaNova-Bold.ttf');
+  src: url('../assets/ProximaNova-Bold.otf');
 }
 
 #welcome {

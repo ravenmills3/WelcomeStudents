@@ -1,5 +1,5 @@
-import Papa from 'papaparse';
 import studentService from './service/studentService.js';
+import userService from "./service/userService";
 import Vue from 'vue';
 import Vuex from 'vuex'
 
@@ -8,20 +8,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         students: [],
-        username: null,
-        password: null,
+        authenticated: false,
     },
      
     getters: {
         allStudents(state) {
             return state.students;
         },
-        adminData(state) {
-            return {
-                username: state.username,
-                password: state.password,
-            };
-        },
+        userAuthenticated(state) {
+            return state.authenticated;
+        }
     },
     
     actions: {
@@ -46,21 +42,18 @@ export default new Vuex.Store({
                 console.log('Error loading student data');
             }
         },
-        getLogin(store) {
-            Papa.parse('https://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=view&id=1IgoqtnA_DvihuijMWP9s5vR4QoKT9qul', {
-                download: true,
-                header: true,
-                complete: ((results) => {
-                    if (results && results.data) {
-                        if (results.data[0] && results.data[0].username && results.data[0].password) {
-                            store.commit('setUsername', results.data[0].username);
-                            store.commit('setPassword', results.data[0].password);
-                        }
-                    }
-                    // eslint-disable-next-line
-                    console.log('loaded loginData');
-                }),
-            });
+        loginUser(store, userPayload) {
+            try {
+                userService.loginUser(userPayload);
+                store.commit('setUserAuthenticated', true);
+                // eslint-disable-next-line
+                console.log('User has successfully logged in');
+            } catch (error) {
+                // eslint-disable-next-line
+                console.log('Error logging in user');
+                store.commit('setUserAuthenticated', false);
+                throw(error);
+            }
         },
         checkInStudent(store, studentPayload) {
             try {
@@ -98,16 +91,13 @@ export default new Vuex.Store({
     },
     
     mutations: {
-        setUsername(state, payload) {
-            state.username = payload;
-        },
-        setPassword(state, payload) {
-            state.password = payload;
-        },
         setStudents(state, student) {
             let studentList =  [...state.students];
             studentList.unshift(student);
             Vue.set(state, 'students', studentList);
+        },
+        setUserAuthenticated(state, value) {
+            Vue.set(state, 'authenticated', value);
         }
     },
 });

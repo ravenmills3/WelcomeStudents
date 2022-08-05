@@ -31,10 +31,9 @@ export default {
     }
   },
   methods :{
-    ...mapActions(['getLogin', 'getAllStudents']),
+    ...mapActions(['getAllStudents']),
   },
   mounted() {
-    this.getLogin();
     this.getAllStudents();
     this.$router.push('login');
   },

@@ -17,13 +17,14 @@ const routes = [
       component(resolve) {
         require(['./views/Login.vue'], resolve);
       },
-    }, {
-      path: '/check',
-      name: 'check',
-      component(resolve) {
-        require(['./views/CheckIn.vue'], resolve);
-      },
-    },
+    }, 
+    // {
+    //   path: '/check',
+    //   name: 'check',
+    //   component(resolve) {
+    //     require(['./views/CheckIn.vue'], resolve);
+    //   },
+    // },
   ];
   export default routes;
   

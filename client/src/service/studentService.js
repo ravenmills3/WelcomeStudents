@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'api/students/';
+const url = 'students';
 
 class studentService {
     // Get Students
@@ -22,7 +22,7 @@ class studentService {
 
     // Update/Check In Students
     static checkInStudent(dbID) {
-        return axios.put(`${url}${dbID}`);
+        return axios.put(`${url}/${dbID}`);
     }
 }
 

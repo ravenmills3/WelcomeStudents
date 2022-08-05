@@ -30,7 +30,7 @@
         <el-button
           type="primary"
           class="login-button"
-          @click="loginUser"
+          @click="localLogin"
           plain
         >Sign In</el-button>
       </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Login',
@@ -52,23 +52,30 @@ export default {
       loginError: false,
     }
   },
-  computed: {
-    ...mapGetters(['adminData']),
-  },
   methods: {
-    loginUser() {
-      if (
-        this.adminData.username === this.localUser
-        && this.adminData.password === this.localPassword
-      ) {
-        // eslint-disable-next-line
-        console.log('User has logged in');
-        this.$router.push('welcome');
+    ...mapActions(['loginUser']),
+    async localLogin() {
+      if (this.localUser != "" && this.localPassword != "") {
+        try {
+          // eslint-disable-next-line
+          await this.loginUser({
+            username: this.localUser,
+            password: this.localPassword,
+          })
+          this.$router.push('welcome');
+        } catch (error) {
+          this.localPassword = '';
+          this.$message({
+            showClose: false,
+            message: 'There was an error logging in. Please check username and password',
+            type: 'error',
+            duration: 2500, 
+          });
+        }
       } else {
-        this.localPassword = '';
         this.$message({
           showClose: false,
-          message: 'There was an error logging in. Please check username and password',
+          message: 'Please enter all information',
           type: 'error',
           duration: 2500, 
         });
@@ -84,7 +91,7 @@ export default {
 }
 @font-face {
   font-family: unbFontBold;
-  src: url('../assets/ProximaNova-Bold.ttf');
+  src: url('../assets/ProximaNova-Bold.otf');
 }
 #login {
   width: 100%;
