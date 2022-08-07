@@ -44,10 +44,11 @@ export default new Vuex.Store({
         },
         loginUser(store, userPayload) {
             try {
-                userService.loginUser(userPayload);
-                store.commit('setUserAuthenticated', true);
-                // eslint-disable-next-line
-                console.log('User has successfully logged in');
+                userService.loginUser(userPayload).then(() => {
+                    store.commit('setUserAuthenticated', true);
+                    // eslint-disable-next-line
+                    console.log('User has successfully logged in');
+                });
             } catch (error) {
                 // eslint-disable-next-line
                 console.log('Error logging in user');
