@@ -6,41 +6,46 @@ const jwt = require('jsonwebtoken');
 
 
 const router = express.Router();
-
-//Created Token for further possibilities with multiple users
-// router.post('/login', async (request, response) => {
-//     try {
-//         // Add User Authentication here
-//         // ----
-//         const uname = request.body.user;
-//         const user = {name: uname};
-//         const access = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-//         response.json({accessToken: access});
-//     } catch (err) {
-//         response.status(err.response.status);
-//         return response.send(err.message);
-//     }
-// });
+/*
+// Created Token for further possibilities with multiple users
+router.post('/login', async (request, response) => {
+    try {
+        // Add User Authentication here
+        // ----
+        const uname = request.body.user;
+        const user = {name: uname};
+        const access = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+        response.json({accessToken: access});
+    } catch (err) {
+        response.status(err.response.status);
+        return response.send(err.message);
+    }
+});
 
 // Created Token for further possibilities with multiple users
 // CREATE USER
-// router.post('/user', async (request, response) => {
-//     try {
-//         const salt = await bcrypt.genSalt()
-//         const hashed = await bcrypt.hash(request.body.password, salt);
+router.post('/user', async (request, response) => {
+    try {
+        const salt = await bcrypt.genSalt()
+        const hashed = await bcrypt.hash(request.body.password, salt);
 
-//         const users = await loadUserDatabase();
-//         users.insertOne({
-//             'username': request.body.username,
-//             'password': hashed,
-//         }); 
-//         response.status(201).send();
-//     } catch (err) {
-//         response.status(err.response.status);
-//         return response.send(err.message);
-//     }
-// })
+        const users = await loadUserDatabase();
+        users.insertOne({
+            'username': request.body.username,
+            'password': hashed,
+        }); 
+        response.status(201).send();
+    } catch (err) {
+        response.status(err.response.status);
+        return response.send(err.message);
+    }
+})
+*/
 
+//  RE-ROUTE INDEX 
+router.get('/', (request, response) => {
+    response.redirect('/students');
+  });
 
 // LOGIN
 router.post('/login', async (request, response) => {
@@ -115,23 +120,24 @@ router.put('/students/:id', async (request, response) => {
     }  
 });
 
-
+/*
 // HELPER AUTHENTICATE FUNCTION
-// function authenticateToken(request, response, next) {
-//     const authHeader = request.headers['authorization'];
-//     const token = authHeader && authHeader.split(' ')[1];
-//     if (token == null) {
-//         return response.sendStatus(401);
-//     }
-//     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-//         if (err) {
-//             return response.sendStatus(403);
-//         }
-//         request.user = user;
-//         next();
-//     });
+function authenticateToken(request, response, next) {
+    const authHeader = request.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return response.sendStatus(401);
+    }
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return response.sendStatus(403);
+        }
+        request.user = user;
+        next();
+    });
 
-// }
+}
+*/
 
 // Async Connect to DB
 async function loadStudDatabase() {

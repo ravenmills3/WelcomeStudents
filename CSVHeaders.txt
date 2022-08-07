@@ -1,8 +1,9 @@
-fname
-lname
-Orientation
+Fname
+Lname
+Pronouns
 Email
 Country
 Dietary_Restrictons
 Student_Number
 Student_Type
+Check_In
