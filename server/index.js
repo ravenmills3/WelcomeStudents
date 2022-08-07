@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(compression()); // Compress all routes
 
 const routes = require('./routes'); //Import routes for "server"
-app.use('/students', routes);
+app.use('/', routes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'));
