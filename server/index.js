@@ -9,14 +9,14 @@ var compression = require('compression');
 var app = express();
 
 app.use(cors());
-pp.use(logger('dev'));
+app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(compression()); // Compress all routes
 
 const routes = require('./routes'); //Import routes for "server"
-app.use('/', routes);
+app.use('/students', routes);
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(__dirname + '/public/'));
