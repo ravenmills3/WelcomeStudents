@@ -42,11 +42,6 @@ router.post('/user', async (request, response) => {
 })
 */
 
-//  RE-ROUTE INDEX 
-router.get('/', (request, response) => {
-    response.redirect('/students');
-  });
-
 // LOGIN
 router.post('/login', async (request, response) => {
     try {
