@@ -140,7 +140,7 @@ async function loadStudDatabase() {
     ('mongodb+srv://isao_01:welcomeStudent1@welcome-register-vownn.mongodb.net/test?retryWrites=true&w=majority',  {
         useNewUrlParser: true,
     });
-    return client.db('test').collection('orientationList');
+    return client.db('test').collection('orientationF22');
 }
 
 async function loadUserDatabase() {
