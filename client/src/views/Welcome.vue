@@ -9,7 +9,7 @@
       center>
       <span class="student-info-wrapper">
           <span class="student-name"> Name: {{ studentInfo.value }}</span>
-          <span class="student-pronoun" v-if="studentInfo.pronoun"> Country: {{ studentInfo.pronoun }}</span>
+          <span class="student-pronoun" v-if="studentInfo.pronoun"> Pronoun(s): {{ studentInfo.pronoun }}</span>
           <span class="student-email" v-if="studentInfo.email"> Email: {{ studentInfo. email }}</span>
       </span>
       <span slot="footer" class="dialog-footer">
