@@ -26,8 +26,8 @@ export default new Vuex.Store({
                 studentService.getStudents().then((response) => {
                     response.map((studentData) => {
                         let student = {
-                            firstName: studentData['fname'],
-                            lastName: studentData['lname'],
+                            firstName: studentData['Fname'],
+                            lastName: studentData['Lname'],
                             pronoun: studentData['Pronoun(s)'],
                             email: studentData['Email'],
                             dbID: studentData['_id'],
