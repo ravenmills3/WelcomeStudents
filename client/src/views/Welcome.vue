@@ -198,6 +198,7 @@ export default {
     },
     setUpStudentNames() {
       this.allStudents.map((student) => {
+        console.log("student object", student);
         let name = `${student.firstName} ${student.lastName}`;
         this.studentNameArray.push({
           value: name,
