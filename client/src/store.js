@@ -76,7 +76,7 @@ export default new Vuex.Store({
                     lastName: studentPayload.lastName,
                     studentID: studentPayload.id,
                     email: studentPayload.email,
-                    country: studentPayload.country,
+                    pronoun: studentPayload.pronoun,
                 };
                 studentService.addStudent(params);
                 setTimeout(() => {
