@@ -81,8 +81,8 @@ router.post('/students', async (request, response) => {
     try {
         const students = await loadStudDatabase();
         students.insertOne({
-            'fname': request.body.firstName,
-            'lname': request.body.lastName,
+            'Fname': request.body.firstName,
+            'Lname': request.body.lastName,
             'Student_Number': request.body.studentID,
             'Email': request.body.email,
             'Pronoun(s)': request.body.pronoun,
