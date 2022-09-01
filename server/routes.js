@@ -85,7 +85,7 @@ router.post('/students', async (request, response) => {
             'lname': request.body.lastName,
             'Student_Number': request.body.studentID,
             'Email': request.body.email,
-            'Country': request.body.country,
+            'Pronoun(s)': request.body.pronoun,
             'Check_In': new Date()
         });
         response.status(201).send();
