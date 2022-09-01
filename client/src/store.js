@@ -32,6 +32,7 @@ export default new Vuex.Store({
                             email: studentData['Email'],
                             dbID: studentData['_id'],
                         };
+                        console.log("student object", student);
                         store.commit('setStudents', student);
                     })
                     // eslint-disable-next-line
