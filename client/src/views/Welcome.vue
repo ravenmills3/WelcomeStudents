@@ -9,7 +9,7 @@
       center>
       <span class="student-info-wrapper">
           <span class="student-name"> Name: {{ studentInfo.value }}</span>
-          <span class="student-country" v-if="studentInfo.country"> Country: {{ studentInfo.country }}</span>
+          <span class="student-pronoun" v-if="studentInfo.pronoun"> Country: {{ studentInfo.pronoun }}</span>
           <span class="student-email" v-if="studentInfo.email"> Email: {{ studentInfo. email }}</span>
       </span>
       <span slot="footer" class="dialog-footer">
@@ -41,8 +41,8 @@
         <el-form-item label="Student #" :label-width="formLabelWidth">
           <el-input v-model="addFormInfo.id" autocomplete="off" placeholder="1234567"></el-input>
         </el-form-item>
-        <el-form-item label="Country" :label-width="formLabelWidth">
-          <el-input v-model="addFormInfo.country" autocomplete="off" placeholder="Canada"></el-input>
+        <el-form-item label="Pronoun(s)" :label-width="formLabelWidth">
+          <el-input v-model="addFormInfo.pronoun" autocomplete="off" placeholder="Canada"></el-input>
         </el-form-item>
         <el-form-item label="Email" :label-width="formLabelWidth">
           <el-input v-model="addFormInfo.email" autocomplete="off" placeholder="john.smith@email.com"></el-input>
@@ -201,7 +201,7 @@ export default {
         let name = `${student.firstName} ${student.lastName}`;
         this.studentNameArray.push({
           value: name,
-          country: student.country,
+          pronoun: student.pronoun,
           email: student.email,
           dbID: student.dbID,
         });
@@ -234,7 +234,7 @@ export default {
     resetStudentInfo() {
       this.studentInfo = {
         value: null,
-        country: null,
+        pronoun: null,
         email: null,
         dbID: null,
       };
@@ -243,7 +243,7 @@ export default {
       this.addFormInfo = {
         firstName: '',
         lastName: '',
-        country: '',
+        pronoun: '',
         email: '',
         id: '',
       };
