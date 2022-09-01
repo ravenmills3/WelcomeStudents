@@ -1,9 +1,7 @@
-Fname
-Lname
-Pronouns
+﻿fname
+lname
+Pronoun(s)
 Email
-Country
-Dietary_Restrictons
+Dietary_Restrictions
 Student_Number
-Student_Type
 Check_In
