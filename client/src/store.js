@@ -28,7 +28,7 @@ export default new Vuex.Store({
                         let student = {
                             firstName: studentData['fname'],
                             lastName: studentData['lname'],
-                            country: studentData['Country'],
+                            pronoun: studentData['Pronoun(s)'],
                             email: studentData['Email'],
                             dbID: studentData['_id'],
                         };
