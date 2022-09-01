@@ -42,7 +42,7 @@
           <el-input v-model="addFormInfo.id" autocomplete="off" placeholder="1234567"></el-input>
         </el-form-item>
         <el-form-item label="Pronoun(s)" :label-width="formLabelWidth">
-          <el-input v-model="addFormInfo.pronoun" autocomplete="off" placeholder="Canada"></el-input>
+          <el-input v-model="addFormInfo.pronoun" autocomplete="off" placeholder="She/Her, He/Him"></el-input>
         </el-form-item>
         <el-form-item label="Email" :label-width="formLabelWidth">
           <el-input v-model="addFormInfo.email" autocomplete="off" placeholder="john.smith@email.com"></el-input>
