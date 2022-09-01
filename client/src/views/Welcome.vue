@@ -109,13 +109,13 @@ export default {
       addFormInfo: {
         firstName: '',
         lastName: '',
-        country: '',
+        pronoun: '',
         email: '',
         id: '',
       },
       studentInfo: {
         value: null,
-        country: null,
+        pronoun: null,
         email: null,
         dbID: null,
       },
